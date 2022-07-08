@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 414a4bda88edfdc449dffb618c149910, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeAmplitude: 10
-  fadeSpeed: 8
+  fadeAmplitude: 2
+  fadeSpeed: 15
 --- !u!61 &8826404188290312996
 BoxCollider2D:
   m_ObjectHideFlags: 0
