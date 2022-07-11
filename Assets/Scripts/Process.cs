@@ -13,21 +13,26 @@ public class Process : MonoBehaviour
     private float stateChangeCountdown;
     private float cooldownTime;
     private float elapsedTime = 0;
-    [SerializeField]
-    private float fadeAmplitude = 10;
-    [SerializeField]
-    private float fadeSpeed = 8;
+    [SerializeField] private float fadeAmplitude = 10;
+    [SerializeField] private float fadeSpeed = 8;
+    [SerializeField] private static Vector3 processDamage = new Vector3(0, 0.08f, 1);
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
-        state = new State(Random.Range(0.03f, 1), Random.Range(0.05f, 0.1f), colors[Random.Range(0, 3)], Random.Range(1, 5));
+        state = new State(Random.Range(0.03f, 1), Random.Range(0.1f, 1), colors[Random.Range(0, 3)], Random.Range(1, 5));
         transform.localScale += new Vector3(0, state.size, 1);
         _renderer.color = state.color;
         stateChangeCountdown = 5;
         cooldownTime = 5;
-        rb.AddForce(new Vector2(0, -state.speed), ForceMode2D.Impulse);
+        rb.gravityScale = state.speed;
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        state.inStack = other.gameObject.layer == 3;
     }
 
     private void OnEnable()
@@ -65,7 +70,7 @@ public class Process : MonoBehaviour
             {
                 if (Color.green == state.color)
                 {
-                    transform.localScale -= new Vector3(0, 0.05f, 1);
+                    transform.localScale -= processDamage;
                     if (transform.localScale.y < 0.02f) Destroy(gameObject);
                 }
                 else if (Color.yellow == state.color)
@@ -87,12 +92,15 @@ public struct State
     public float rate;
     public Color color;
 
+    public bool inStack;
+
     public State(float size, float speed, Color color, float rate)
     {
         this.size = size;
         this.speed = speed;
         this.color = color;
         this.rate = rate;
+        inStack = false;
     }
 }
 
