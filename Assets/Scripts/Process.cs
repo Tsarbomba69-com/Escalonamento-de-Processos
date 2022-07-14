@@ -91,7 +91,6 @@ public struct State
     public float speed;
     public float rate;
     public Color color;
-
     public bool inStack;
 
     public State(float size, float speed, Color color, float rate)
