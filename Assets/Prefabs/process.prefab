@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeAmplitude: 2
   fadeSpeed: 15
+  stateChangeSound: {fileID: 8300000, guid: 49f30241b858bf04186b99f3d3cca4bc, type: 3}
 --- !u!61 &8826404188290312996
 BoxCollider2D:
   m_ObjectHideFlags: 0

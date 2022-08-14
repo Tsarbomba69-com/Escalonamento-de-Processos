@@ -13,9 +13,11 @@ public class Process : MonoBehaviour
     private float stateChangeCountdown;
     private float cooldownTime;
     private float elapsedTime = 0;
+    private GameManager manager;
     [SerializeField] private float fadeAmplitude = 10;
     [SerializeField] private float fadeSpeed = 8;
     [SerializeField] private static Vector3 processDamage = new Vector3(0, 0.08f, 1);
+    [SerializeField] private AudioClip stateChangeSound;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +40,18 @@ public class Process : MonoBehaviour
     private void OnEnable()
     {
         mainCamera = Camera.main;
+        manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        manager.gameOverEvent += Disable;
+    }
+
+    void OnDisable()
+    {
+        manager.gameOverEvent -= Disable;
+    }
+
+    void Disable()
+    {
+        enabled = false;
     }
 
     // Update is called once per frame
@@ -71,11 +85,17 @@ public class Process : MonoBehaviour
                 if (Color.green == state.color)
                 {
                     transform.localScale -= processDamage;
-                    if (transform.localScale.y < 0.02f) Destroy(gameObject);
+                    manager.UpdateScore(15);
+                    if (transform.localScale.y < 0.02f)
+                    {
+                        manager.UpdateScore((uint)(state.size + state.speed - state.rate) * 2);
+                        Destroy(gameObject);
+                    }
                 }
                 else if (Color.yellow == state.color)
                 {
                     state.color = Color.green;
+                    AudioSource.PlayClipAtPoint(stateChangeSound, transform.position, 1);
                     _renderer.color = state.color;
                 }
             }
