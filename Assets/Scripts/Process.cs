@@ -9,26 +9,28 @@ public class Process : MonoBehaviour
     public State state;
     private SpriteRenderer _renderer;
     private Camera mainCamera;
-    private Color[] colors = new Color[] { Color.red, Color.green, Color.yellow };
+    private Color[] colors = new Color[] { Color.red, Color.yellow, Color.green };
     private float stateChangeCountdown;
-    private float cooldownTime;
+    private float damageCooldown = 0.9f;
     private float elapsedTime = 0;
     private GameManager manager;
     [SerializeField] private float fadeAmplitude = 10;
     [SerializeField] private float fadeSpeed = 8;
-    [SerializeField] private static Vector3 processDamage = new Vector3(0, 0.08f, 1);
+    [SerializeField] private static Vector3 processDamage = new Vector3(0, 0.10f);
     [SerializeField] private AudioClip stateChangeSound;
+    [SerializeField] private Sprite[] logos;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
-        state = new State(Random.Range(0.03f, 1), Random.Range(0.1f, 1), colors[Random.Range(0, 3)], Random.Range(1, 5));
-        transform.localScale += new Vector3(0, state.size, 1);
+        SpriteRenderer logoRender = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        logoRender.sprite = logos[Random.Range(0, logos.Length)];
+        state = new State(Random.Range(0.03f, 1), Random.Range(0.1f, 1), colors[Random.Range(0, 2)], Random.Range(5, 10));
+        transform.localScale += new Vector3(0, state.size);
         _renderer.color = state.color;
-        stateChangeCountdown = 5;
-        cooldownTime = 5;
+        stateChangeCountdown = state.rate;
         rb.gravityScale = state.speed;
     }
 
@@ -57,51 +59,61 @@ public class Process : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cooldownTime -= Time.deltaTime;
+        damageCooldown -= Time.deltaTime;
 
-        if (cooldownTime > 0)
+        if (stateChangeCountdown < 0)
         {
+            state.color = colors[state.color == Color.red ? 1 : 0];
+            _renderer.color = state.color;
             stateChangeCountdown = state.rate;
             return;
         }
 
-        if (stateChangeCountdown < 0)
+        if (stateChangeCountdown < 2)
         {
-            state.color = colors[Random.Range(0, 3)];
-            _renderer.color = state.color;
-            cooldownTime = state.rate;
-        }
-        else
-        {
-            Vector2 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
-            stateChangeCountdown -= Time.deltaTime;
             elapsedTime += Time.fixedDeltaTime;
             float alpha = fadeAmplitude * Mathf.Sin(elapsedTime * fadeSpeed);
             _renderer.color = new Color(_renderer.color.r, _renderer.color.g, _renderer.color.b, alpha);
+        }
 
-            if (hit.transform == transform && Input.GetMouseButtonDown(0))
+
+        Vector2 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+        stateChangeCountdown -= Time.deltaTime;
+
+
+        if (hit.transform == transform && Input.GetMouseButtonDown(0))
+        {
+            if (Color.yellow == state.color)
             {
-                if (Color.green == state.color)
+                Process prev = manager.prevProcess;
+
+                if (prev != null)
                 {
-                    transform.localScale -= processDamage;
-                    manager.UpdateScore(15);
-                    if (transform.localScale.y < 0.02f)
-                    {
-                        manager.UpdateScore((uint)(state.size + state.speed - state.rate) * 2);
-                        Destroy(gameObject);
-                    }
+                    prev.state.color = Color.yellow;
+                    prev._renderer.color = Color.yellow;
                 }
-                else if (Color.yellow == state.color)
-                {
-                    state.color = Color.green;
-                    AudioSource.PlayClipAtPoint(stateChangeSound, transform.position, 1);
-                    _renderer.color = state.color;
-                }
+
+                manager.prevProcess = this;
+                state.color = Color.green;
+                AudioSource.PlayClipAtPoint(stateChangeSound, transform.position, 1);
+                _renderer.color = state.color;
             }
         }
-    }
 
+        if (Color.green == state.color && damageCooldown < 0)
+        {
+            transform.localScale -= processDamage;
+            damageCooldown = 0.9f;
+            manager.UpdateScore(15);
+            if (transform.localScale.y < 0.02f)
+            {
+                manager.UpdateScore((uint)(state.size + state.speed - state.rate) * 2);
+                Destroy(gameObject);
+            }
+        }
+
+    }
 }
 
 

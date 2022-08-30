@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     private static Color backgroundColor = new Color32(5, 118, 121, 0);
     private AudioSource audioSource;
     private uint score = 0;
+    public Process prevProcess = null;
     public delegate void EventHandler();
     public event EventHandler gameOverEvent;
 
@@ -118,7 +119,7 @@ public class GameManager : MonoBehaviour
     public void UpdateScore(uint value)
     {
         score += value;
-        audioSource.PlayOneShot(value > 15 ? sounds[(int)Sounds.BigScore] : sounds[(int)Sounds.Score]);
+        if (value > 15) audioSource.PlayOneShot(sounds[(int)Sounds.BigScore]);
     }
 
     void OnGUI()
