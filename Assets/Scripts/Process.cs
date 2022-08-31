@@ -7,7 +7,7 @@ public class Process : MonoBehaviour
 {
     private Rigidbody2D rb;
     public State state;
-    private SpriteRenderer _renderer;
+    private SpriteRenderer renderer;
     private Camera mainCamera;
     private Color[] colors = new Color[] { Color.red, Color.yellow, Color.green };
     private float stateChangeCountdown;
@@ -24,12 +24,12 @@ public class Process : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        _renderer = GetComponent<SpriteRenderer>();
+        renderer = GetComponent<SpriteRenderer>();
         SpriteRenderer logoRender = transform.GetChild(0).GetComponent<SpriteRenderer>();
         logoRender.sprite = logos[Random.Range(0, logos.Length)];
         state = new State(Random.Range(0.03f, 1), Random.Range(0.1f, 1), colors[Random.Range(0, 2)], Random.Range(5, 10));
         transform.localScale += new Vector3(0, state.size);
-        _renderer.color = state.color;
+        renderer.color = state.color;
         stateChangeCountdown = state.rate;
         rb.gravityScale = state.speed;
     }
@@ -64,7 +64,7 @@ public class Process : MonoBehaviour
         if (stateChangeCountdown < 0)
         {
             state.color = colors[state.color == Color.red ? 1 : 0];
-            _renderer.color = state.color;
+            renderer.color = state.color;
             stateChangeCountdown = state.rate;
             return;
         }
@@ -73,9 +73,8 @@ public class Process : MonoBehaviour
         {
             elapsedTime += Time.fixedDeltaTime;
             float alpha = fadeAmplitude * Mathf.Sin(elapsedTime * fadeSpeed);
-            _renderer.color = new Color(_renderer.color.r, _renderer.color.g, _renderer.color.b, alpha);
+            renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, alpha);
         }
-
 
         Vector2 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
@@ -91,13 +90,13 @@ public class Process : MonoBehaviour
                 if (prev != null)
                 {
                     prev.state.color = Color.yellow;
-                    prev._renderer.color = Color.yellow;
+                    prev.renderer.color = Color.yellow;
                 }
 
                 manager.prevProcess = this;
                 state.color = Color.green;
                 AudioSource.PlayClipAtPoint(stateChangeSound, transform.position, 1);
-                _renderer.color = state.color;
+                renderer.color = state.color;
             }
         }
 
