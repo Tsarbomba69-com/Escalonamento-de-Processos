@@ -113,7 +113,7 @@ Transform:
   m_GameObject: {fileID: 8826404188290312998}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.27, y: 1.05, z: 1}
+  m_LocalScale: {x: 0.27, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 395242352}
@@ -204,6 +204,16 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 81f1b9f651959e1418f3504f3688d985, type: 3}
   - {fileID: 21300000, guid: 293aae09f87ef7d43aa27e965de470f9, type: 3}
   - {fileID: 21300000, guid: 79a037621388072438c5a3c2d2b7923f, type: 3}
+  - {fileID: 21300000, guid: 4a1f5526d232ba04c853c89b4dbbd54a, type: 3}
+  - {fileID: 21300000, guid: 80111ab68718141429dc3c849b5c0b8d, type: 3}
+  - {fileID: 21300000, guid: 7e11c22c030bff743a043b47f094403d, type: 3}
+  - {fileID: 21300000, guid: 6753fc542b533844bb4b3c6f4029d4fa, type: 3}
+  - {fileID: 21300000, guid: a6ac6cb1d5cd50a43953aec05a875e62, type: 3}
+  - {fileID: 21300000, guid: 7a2a9a5d36a83534aa79540c78662534, type: 3}
+  - {fileID: 21300000, guid: 42521d3d322746e44b920cf364e243b8, type: 3}
+  - {fileID: 21300000, guid: 471ee055e4f3ee841a344f46debc1974, type: 3}
+  - {fileID: 21300000, guid: 04b5f976d277a84468ee19de615aac84, type: 3}
+  particleEffect: {fileID: 8063755518608984291, guid: 76c3acc1da081c748b4e1ae3a9442759, type: 3}
 --- !u!61 &8826404188290312996
 BoxCollider2D:
   m_ObjectHideFlags: 0

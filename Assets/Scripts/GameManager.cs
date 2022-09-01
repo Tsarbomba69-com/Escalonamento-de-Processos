@@ -16,11 +16,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private AudioClip[] sounds;
     [SerializeField] private TextMeshProUGUI scoreTxt;
+    private GameObject lostMenu;
+    private GameObject pauseMenu;
     private Collider2D killBar;
     private List<Collider2D> processesToKill = new List<Collider2D>(13);
     private float spawnTimer;
     private Camera mainCamera;
     private bool waiting = false;
+    private bool paused = false;
     private static Color backgroundColor = new Color32(5, 118, 121, 0);
     private AudioSource audioSource;
     private uint score = 0;
@@ -36,6 +39,8 @@ public class GameManager : MonoBehaviour
         spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
         killBar = GameObject.FindGameObjectWithTag("Finish").GetComponent<Collider2D>();
         audioSource = GetComponent<AudioSource>();
+        lostMenu = panel.transform.GetChild(0).gameObject;
+        pauseMenu = panel.transform.GetChild(1).gameObject;
         Instantiate(processPrefab, spawnPoints[Random.Range(0, spawnPoints.Length)].transform.position, Quaternion.identity);
     }
 
@@ -73,9 +78,32 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
+    public void Pause()
+    {
+        if (paused)
+        {
+            Time.timeScale = 1;
+            paused = false;
+            panel.SetActive(false);
+            pauseMenu.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0;
+            paused = true;
+            panel.SetActive(true);
+            pauseMenu.SetActive(true);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape) && !lostMenu.activeSelf)
+        {
+            Pause();
+        }
+
         if (waiting) return;
 
         if (spawnTimer < 0)
@@ -93,7 +121,9 @@ public class GameManager : MonoBehaviour
     {
         if (loseTimer < 0)
         {
+            Destroy(pauseMenu);
             panel.SetActive(true);
+            lostMenu.SetActive(true);
             audioSource.PlayOneShot(sounds[(int)Sounds.Lost]);
             Time.timeScale = 0;
             gameOverEvent?.Invoke();

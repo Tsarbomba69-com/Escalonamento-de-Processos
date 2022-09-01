@@ -13,18 +13,21 @@ public class Process : MonoBehaviour
     private float stateChangeCountdown;
     private float damageCooldown = 0.9f;
     private float elapsedTime = 0;
+    private float particleLifetime;
     private GameManager manager;
     [SerializeField] private float fadeAmplitude = 10;
     [SerializeField] private float fadeSpeed = 8;
-    [SerializeField] private static Vector3 processDamage = new Vector3(0, 0.10f);
+    [SerializeField] private static Vector3 processDamage = new Vector3(0, 0.1f);
     [SerializeField] private AudioClip stateChangeSound;
     [SerializeField] private Sprite[] logos;
+    [SerializeField] private Transform particleEffect;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
+        particleLifetime = particleEffect.GetComponent<ParticleSystem>().main.duration;
         SpriteRenderer logoRender = transform.GetChild(0).GetComponent<SpriteRenderer>();
         logoRender.sprite = logos[Random.Range(0, logos.Length)];
         state = new State(Random.Range(0.03f, 1), Random.Range(0.1f, 1), colors[Random.Range(0, 2)], Random.Range(5, 10));
@@ -59,11 +62,12 @@ public class Process : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 0) return;
         damageCooldown -= Time.deltaTime;
 
         if (stateChangeCountdown < 0)
         {
-            state.color = colors[state.color == Color.red ? 1 : 0];
+            state.color = colors[state.color == Color.green || state.color == Color.yellow ? 0 : 1];
             _renderer.color = state.color;
             stateChangeCountdown = state.rate;
             return;
@@ -89,8 +93,8 @@ public class Process : MonoBehaviour
 
                 if (prev != null)
                 {
-                    prev.state.color = Color.yellow;
-                    prev._renderer.color = Color.yellow;
+                    prev.state.color = prev.state.color == Color.red ? Color.red : Color.yellow;
+                    prev._renderer.color = prev.state.color == Color.red ? Color.red : Color.yellow;
                 }
 
                 manager.prevProcess = this;
@@ -108,6 +112,8 @@ public class Process : MonoBehaviour
             if (transform.localScale.y < 0.02f)
             {
                 manager.UpdateScore((uint)(state.size + state.speed - state.rate) * 2);
+                Transform _ = Instantiate(particleEffect, transform.position + 2 * Vector3.back, particleEffect.transform.rotation);
+                Destroy(_.gameObject, particleLifetime + 1);
                 Destroy(gameObject);
             }
         }
