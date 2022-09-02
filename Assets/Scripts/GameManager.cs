@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private AudioClip[] sounds;
     [SerializeField] private TextMeshProUGUI scoreTxt;
+    [SerializeField] private AudioSource SFX;
     private GameObject lostMenu;
     private GameObject pauseMenu;
     private Collider2D killBar;
@@ -136,11 +137,12 @@ public class GameManager : MonoBehaviour
                 Process process = p.GetComponent<Process>();
                 loseTimer -= process.state.inStack ? Time.deltaTime : 0;
                 mainCamera.backgroundColor = process.state.inStack ? Color.Lerp(backgroundColor, Color.red, Mathf.PingPong(Time.time, 1)) : backgroundColor;
-                if (process.state.inStack && !audioSource.isPlaying) audioSource.PlayOneShot(sounds[(int)Sounds.Alert], 0.5f);
+                if (process.state.inStack && !SFX.isPlaying) SFX.PlayOneShot(sounds[(int)Sounds.Alert], 0.5f);
             }
         }
         else
         {
+            SFX.Stop();
             mainCamera.backgroundColor = backgroundColor;
             loseTimer = 5;
         }
