@@ -46,6 +46,13 @@
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\ParticleEffects\TutorialInfo\Scripts\Readme.cs" />
      <Compile Include="Assets\ParticleEffects\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
+     <Compile Include="Assets\loadingBar\scripts\simplerotate.cs" />
+     <Compile Include="Assets\loadingBar\scripts\loadingcolorful.cs" />
+     <Compile Include="Assets\loadingBar\scripts\Loading.cs" />
+     <Compile Include="Assets\loadingBar\scripts\loadingbar.cs" />
+     <Compile Include="Assets\loadingBar\scripts\loadingtext.cs" />
+     <Compile Include="Assets\loadingBar\scripts\SimpleLoading.cs" />
+     <Compile Include="Assets\loadingBar\scripts\rotatetotate.cs" />
      <None Include="Assets\ParticleEffects\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
      <None Include="Assets\ParticleEffects\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\ParticleEffects\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
