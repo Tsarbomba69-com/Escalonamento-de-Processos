@@ -1,6 +1,6 @@
 ## Build to an Android Phone in Unity
 1. Install: Android Build support
-2. Edit -> preferences -> set all Android checkboxes
+2. Edit -> preferences -> set all Android checkboxes [x]
 3. Build for Android.
 4. Set smartphone to dev mode.
 5. Set keystore: Player Settings -> Publishing Settings
