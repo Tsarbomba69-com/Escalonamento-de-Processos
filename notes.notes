@@ -1,0 +1,19 @@
+## Build to an Android Phone in Unity
+1. Install: Android Build support
+2. Edit -> preferences -> set all Android checkboxes
+3. Build for Android.
+4. Set smartphone to dev mode.
+5. Set keystore: Player Settings -> Publishing Settings
+6. Set Other Settings (optional).
+7. Build game. 
+
+## UI responsiveness elements
+- Resize: Canvas -> Canvas Scalar 
+[csharp]
+    {
+        public enum UiScaleMode scaleMode = UiScaleMode.ScaleWithScreen;
+        public enum ScreenMatchMode matchMode = ScreenMatchMode.Expand;
+    }
+[end]
+
+- Position: UI element -> Rect Transform -> Anchor Presets
