@@ -53,9 +53,6 @@
      <Compile Include="Assets\loadingBar\scripts\loadingcolorful.cs" />
      <Compile Include="Assets\ParticleEffects\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
      <Compile Include="Assets\loadingBar\scripts\loadingbar.cs" />
-     <Compile Include="Assets\Scripts\AnchorGameObject.cs" />
-     <Compile Include="Assets\Scripts\CameraViewportHandler.cs" />
-     <Compile Include="Assets\Scripts\ScaleToFitScreen.cs" />
      <None Include="Assets\ParticleEffects\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
      <None Include="Assets\ParticleEffects\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\ParticleEffects\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
