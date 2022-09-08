@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Image imageComp;
     [SerializeField] private Text text;
     [SerializeField] private Text textNormal;
-
+    [SerializeField] private GameObject tutorial;
 
     public void StartGame()
     {
@@ -38,5 +38,11 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Exited game!");
+    }
+
+    public void Tutorial(bool enable)
+    {
+        mainMenu.SetActive(!enable);
+        tutorial.SetActive(enable);
     }
 }

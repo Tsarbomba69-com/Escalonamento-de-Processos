@@ -82,6 +82,8 @@ public class GameManager : MonoBehaviour
 
     public void Pause()
     {
+        if (lostMenu.activeSelf) return;
+
         if (paused)
         {
             Time.timeScale = 1;
@@ -101,7 +103,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !lostMenu.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Pause();
         }

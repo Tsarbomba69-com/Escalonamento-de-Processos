@@ -7,6 +7,8 @@
 6. Set Other Settings (optional).
 7. Build game. 
 
+- Reference: https://www.youtube.com/watch?v=Nb62z3J4A_A
+
 ## UI responsiveness elements
 - Resize: Canvas -> Canvas Scalar 
 [csharp]
@@ -17,3 +19,22 @@
 [end]
 
 - Position: UI element -> Rect Transform -> Anchor Presets
+
+## Scrolling and scrollbars in Unity
+1. Create all UI elements that goes inside the Scroll Area.
+2. Create a parent (content) object and put all the elements inside.
+3. Add Vertical Layout Group & Content Size Fitter.
+[csharp]
+    {
+        public RectTransform Content = contentGameObject;
+        public RectTransform ViewPort = this;
+    }
+[end]
+4. Add Rect Mask to Scroll Area to prevent elements from overflowing.
+
+- Reference: https://www.youtube.com/watch?v=rAqyi85IAJ0
+
+## UNITY ADS (+ rewarded ads) - Monetize your mobile games!
+1. Sign in into your Unity account.2
+2. Go to: Window -> General -> Services.
+3. Select Organization -> Create.
