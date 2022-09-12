@@ -17,7 +17,7 @@ public class Process : MonoBehaviour
     private GameManager manager;
     [SerializeField] private float fadeAmplitude = 10;
     [SerializeField] private float fadeSpeed = 8;
-    [SerializeField] private static Vector3 processDamage = new Vector3(0, 0.1f);
+    [SerializeField] private static Vector3 processDamage = new Vector3(0, 0.2f);
     [SerializeField] private AudioClip stateChangeSound;
     [SerializeField] private Sprite[] logos;
     [SerializeField] private Transform particleEffect;
@@ -109,7 +109,7 @@ public class Process : MonoBehaviour
             transform.localScale -= processDamage;
             damageCooldown = 0.9f;
             manager.UpdateScore(15);
-            if (transform.localScale.y < 0.02f)
+            if (transform.localScale.y < 0.09f)
             {
                 manager.UpdateScore((uint)(state.size + state.speed - state.rate) * 2);
                 Transform _ = Instantiate(particleEffect, transform.position + 2 * Vector3.back, particleEffect.transform.rotation);
