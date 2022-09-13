@@ -26,7 +26,7 @@
 3. Add Vertical Layout Group & Content Size Fitter.
 [csharp]
     {
-        public RectTransform Content = contentGameObject;
+        public RectTransform Content = content.GetComponent<RectTransform>();
         public RectTransform ViewPort = this;
     }
 [end]
@@ -34,10 +34,27 @@
 
 - Reference: https://www.youtube.com/watch?v=rAqyi85IAJ0
 
-## UNITY ADS (+ rewarded ads) - Monetize your mobile games!
-1. Sign in into your Unity account.
-2. Go to: Window -> General -> Services.
-3. Select Organization -> Create.
-4. Select Ads and turn it on.
-5. Go to Dashboard.
-6. Monetize -> 
+## Unity Ads 2022 (Rewarded and Interstitial)
+1. Configure game project.
+    1.1. File -> Build Settings: IOS || Android.
+2. Create project ID.
+    2.1. Window -> General -> Services: Turn on Ads.
+    2.2. Select organization.
+    2.3. Edit -> Project Settings -> Services -> Ads -> Ads Package: Install Latest Version.
+3. Create AdsInitializer script. # Reference: https://docs.unity.com/ads/InitializingTheUnitySDK.html
+    3.1. Paste code inside it.
+    3.2. Create a game object and assign the script.
+    3.3. Set the IOS & Android ID: 
+    [csharp]
+        {
+            [SerializeField] string _androidGameId;
+            [SerializeField] string _iOSGameId;
+        }
+    [end]
+4. Create Interstitial Ad button.
+    4.1. Create InterstitialAdsButton script. # Reference: https://docs.unity.com/ads/ImplementingBasicAdsUnity.html
+    4.2. Window -> General -> Services: Dashboard.
+    4.3. Monetization -> Complete Activation: Select I'm not using Mediation, only Unity Ads.
+    4.4. Create Ads button and subscribe ShowAd callback OnClick event.
+
+- Reference: https://www.youtube.com/watch?v=tzgOTVPXC-I

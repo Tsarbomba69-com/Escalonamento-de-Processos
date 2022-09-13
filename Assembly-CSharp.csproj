@@ -53,6 +53,8 @@
      <Compile Include="Assets\loadingBar\scripts\loadingcolorful.cs" />
      <Compile Include="Assets\ParticleEffects\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
      <Compile Include="Assets\loadingBar\scripts\loadingbar.cs" />
+     <Compile Include="Assets\Scripts\AdsInitializer.cs" />
+     <Compile Include="Assets\Scripts\InterstitialAd.cs" />
      <None Include="Assets\ParticleEffects\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
      <None Include="Assets\ParticleEffects\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\ParticleEffects\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
@@ -810,9 +812,6 @@
     </Reference>
     <Reference Include="Unity.Mathematics.Editor">
         <HintPath>C:\Users\hendr\OneDrive\Documents\Game Projects\Escalonamento de Processos\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Monetization">
-        <HintPath>C:\Users\hendr\OneDrive\Documents\Game Projects\Escalonamento de Processos\Library\ScriptAssemblies\UnityEngine.Monetization.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Common.Editor">
         <HintPath>C:\Users\hendr\OneDrive\Documents\Game Projects\Escalonamento de Processos\Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>

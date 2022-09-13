@@ -17,7 +17,7 @@ public class Process : MonoBehaviour
     private GameManager manager;
     [SerializeField] private float fadeAmplitude = 10;
     [SerializeField] private float fadeSpeed = 8;
-    [SerializeField] private static Vector3 processDamage = new Vector3(0, 0.2f);
+    [SerializeField] private static Vector3 processDamage = new Vector3(0, 0.1f);
     [SerializeField] private AudioClip stateChangeSound;
     [SerializeField] private Sprite[] logos;
     [SerializeField] private Transform particleEffect;
